@@ -1,6 +1,8 @@
+package ControllerForm;
 
-//import com.sun.jdi.connect.spi.Connection;
-import java.sql.*;
+
+
+
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -11,18 +13,16 @@ import java.sql.*;
  *
  * @author user
  */
-//import java.sql.*;
+
+import Dao.UserDao;
 public class LoginForm extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LoginForm.class.getName());
+    //private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LoginForm.class.getName());
 
     /**
      * Creates new form LoginForm
      */
-    public LoginForm() {
-        initComponents();
-    }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -157,6 +157,19 @@ public class LoginForm extends javax.swing.JFrame {
         
          java.awt.EventQueue.invokeLater(() -> new DashboardForm().setVisible(true));
     this.dispose(); // closes the login form
+    
+    String u = username.getText();
+    String pwd = password.getText();
+
+    UserDao userDao = new UserDao();
+
+    if (userDao.checkLogin(u, pwd)) {
+        javax.swing.JOptionPane.showMessageDialog(this, "✅ Login Successful!");
+        new DashboardForm().setVisible(true);
+        this.dispose();
+    } else {
+        javax.swing.JOptionPane.showMessageDialog(this, "❌ Invalid Username or Password!");
+    }
     }//GEN-LAST:event_loginBtnActionPerformed
 
     private void signupBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupBtnActionPerformed
