@@ -4,7 +4,7 @@
  */
 package ControllerForm;
 
-import Dao.UserDao;
+import Model.UserModel;
 
 /**
  *
@@ -124,9 +124,9 @@ public class LoginFormC extends javax.swing.JFrame {
     String u = username.getText();
     String pwd = password.getText();
 
-    UserDao userDao = new UserDao();
+    UserModel userDto = new UserModel();
 
-    if (userDao.checkLogin(u, pwd)) {
+    if (userDto.checkLogin(u, pwd)) {
        // javax.swing.JOptionPane.showMessageDialog(this, "✅ Login Successful!");
         java.awt.EventQueue.invokeLater(() -> new DashboardForm().setVisible(true));
         this.dispose();

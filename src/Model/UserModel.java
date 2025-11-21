@@ -2,20 +2,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Dao;
+package Model;
 //import com.blendbuddy.db.DbConnection
 
 import Db.DbConnection;
-import Db.DbConnection;
+import Dto.UserDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
  * @author user
  */
-public class UserDao {
+public class UserModel {
 
     public void getAllUsers() {
         try {
@@ -32,25 +33,43 @@ public class UserDao {
             e.printStackTrace();
         }
     }
-    
-    public boolean saveUser(String userName, String password, String email) {
+
+    public static boolean saveUser(UserDto dto) throws SQLException {
         try {
             Connection conn = DbConnection.getInstance();
             String sql = "INSERT INTO user (userName, password, email) VALUES (?, ?, ?)";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, userName);
-            ps.setString(2, password);
-            ps.setString(3, email);
 
-            int result = ps.executeUpdate(); // returns number of affected rows
-            return result > 0; // true if inserted successfully
+            PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 
-        } catch (Exception e) {
+            ps.setString(1, dto.getUserName());
+            ps.setString(2, dto.getPassword());
+            ps.setString(3, dto.getEmail());
+
+            int affectedRows = ps.executeUpdate();
+
+            if (affectedRows == 0) {
+                return false; // insertion failed
+            }
+
+            // Get the auto-generated userId
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int userId = generatedKeys.getInt(1);
+                    dto.setUserId(userId);
+                    System.out.println("Inserted userId = " + userId);
+
+                    // Optional: store in DTO if needed
+                    dto.setUserId(userId);
+                }
+            }
+
+            return true;
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
-    
+
     public boolean checkLogin(String userName, String password) {
         try {
             Connection conn = DbConnection.getInstance();
