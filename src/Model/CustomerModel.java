@@ -71,7 +71,7 @@ public class CustomerModel {
      
      private static String splitCuctomerId(String currentEmployeeId) {
         if(currentEmployeeId!= null) {
-            String[] split = currentEmployeeId.split("E0");
+            String[] split = currentEmployeeId.split("C0");
 
             int id = Integer.parseInt(split[1]); //01
             id++;
@@ -79,6 +79,30 @@ public class CustomerModel {
         } else {
             return "C001";
         }
+    }
+     
+     public ArrayList<CustomerDto> getAllCustomer() throws SQLException {
+        Connection connection = DbConnection.getInstance();
+        String sql = "SELECT * FROM customer";
+
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        ResultSet resultSet = pstm.executeQuery();
+        ArrayList<CustomerDto> dtoList = new ArrayList<>();
+
+        while (resultSet.next()) {
+            dtoList.add(
+                    new CustomerDto(
+                            resultSet.getString(1),
+                            resultSet.getString(2),
+                            resultSet.getString(3),
+                            resultSet.getInt(4),
+                            resultSet.getString(5)
+                            
+
+                    )
+            );
+        }
+        return dtoList;
     }
 
 }

@@ -1,15 +1,13 @@
-
 package ControllerForm;
 
 import Dto.CustomerDto;
 import Model.CustomerModel;
+import Tm.CustomerTm;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-
-
-
+import javax.swing.table.DefaultTableModel;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -19,7 +17,6 @@ import javax.swing.JOptionPane;
  *
  * @author user
  */
-  
 public class CustomerForm extends javax.swing.JFrame {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CustomerForm.class.getName());
@@ -56,7 +53,7 @@ public class CustomerForm extends javax.swing.JFrame {
         CustomerUpdateBtn = new javax.swing.JButton();
         CustomerDeleteBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblCustomer = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,7 +88,7 @@ public class CustomerForm extends javax.swing.JFrame {
 
         CustomerDeleteBtn.setText("Delete");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblCustomer.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -100,10 +97,10 @@ public class CustomerForm extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Customer ID", "Name", "Contact Number", "Email", "User ID"
+                "Customer ID", "Name", "Contact Number", "UserId", "Email"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblCustomer);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -195,9 +192,10 @@ public class CustomerForm extends javax.swing.JFrame {
 public void initialize() {
         generateCustomerId();
         populateComboBox();
+        loadAllCustomer();
         //populateComboBoxEmpType();
     }
-    
+
     private void CustomerSaveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomerSaveBtnActionPerformed
         // TODO add your handling code here:
         String id = txtCusId.getText();
@@ -235,32 +233,73 @@ public void initialize() {
     public void populateComboBox() {
 
         try {
-        List<String> dataFromDB = CustomerModel.getCmbUserId();
+            List<String> dataFromDB = CustomerModel.getCmbUserId();
 
-        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
 
-        for (String item : dataFromDB) {
-            model.addElement(item);
+            for (String item : dataFromDB) {
+                model.addElement(item);
+            }
+
+            cmbUserId.setModel(model);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
-        cmbUserId.setModel(model);
-
-    } catch (SQLException e) {
-        e.printStackTrace();
     }
-    }
-    
-    private String generateCustomerId(){
+
+    private String generateCustomerId() {
         String cusId = null;
         try {
-            cusId= CustomerModel.getGenerateEmployeeId();
+            cusId = CustomerModel.getGenerateEmployeeId();
             txtCusId.setText(cusId);
         } catch (SQLException e) {
-           // new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            // new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
 
         return cusId;
     }
+
+    public void loadAllCustomer() {
+        var model = new CustomerModel();
+
+        try {
+            List<CustomerDto> dtoList = model.getAllCustomer();
+
+            // Get the table model from your JTable
+            DefaultTableModel tableModel = (DefaultTableModel) tblCustomer.getModel();
+
+            // Clear existing rows
+            tableModel.setRowCount(0);
+
+            // Add rows to the table
+            for (CustomerDto dto : dtoList) {
+                Object[] rowData = {
+                    dto.getCusId(),
+                    dto.getCusName(),
+                    dto.getConNum(),
+                    dto.getUserId(),
+                    dto.getEmail()
+                };
+                tableModel.addRow(rowData);  // <-- Correct way
+            }
+
+            // Optionally select the first row
+            if (tableModel.getRowCount() > 0) {
+                tblCustomer.setRowSelectionInterval(0, 0);
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Error loading customer data:\n" + e.getMessage(),
+                    "Database Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            e.printStackTrace();
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -298,7 +337,7 @@ public void initialize() {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblCustomer;
     private javax.swing.JTextField txtConNum;
     private javax.swing.JTextField txtCusId;
     private javax.swing.JTextField txtEmail;
