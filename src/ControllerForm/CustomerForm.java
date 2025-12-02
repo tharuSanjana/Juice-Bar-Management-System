@@ -92,6 +92,11 @@ public class CustomerForm extends javax.swing.JFrame {
         });
 
         CustomerDeleteBtn.setText("Delete");
+        CustomerDeleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CustomerDeleteBtnActionPerformed(evt);
+            }
+        });
 
         tblCustomer.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -250,6 +255,22 @@ public void initialize() {
         }
     });
     }//GEN-LAST:event_CustomerUpdateBtnActionPerformed
+
+    private void CustomerDeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomerDeleteBtnActionPerformed
+        // TODO add your handling code here:
+       java.awt.EventQueue.invokeLater(() -> {
+        try {
+            CustomerDeleteForm form = new CustomerDeleteForm();
+            form.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            form.setVisible(true);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this,
+                "Failed to open Customer Delete Form: " + ex.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
+    });
+    }//GEN-LAST:event_CustomerDeleteBtnActionPerformed
 
     public void populateComboBox() {
 
