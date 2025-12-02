@@ -85,6 +85,11 @@ public class CustomerForm extends javax.swing.JFrame {
         });
 
         CustomerUpdateBtn.setText("Update");
+        CustomerUpdateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CustomerUpdateBtnActionPerformed(evt);
+            }
+        });
 
         CustomerDeleteBtn.setText("Delete");
 
@@ -229,6 +234,22 @@ public void initialize() {
     private void cmbUserIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbUserIdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbUserIdActionPerformed
+
+    private void CustomerUpdateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomerUpdateBtnActionPerformed
+        // TODO add your handling code here:
+       java.awt.EventQueue.invokeLater(() -> {
+        try {
+            CustomerUpdateForm form = new CustomerUpdateForm();
+            form.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            form.setVisible(true);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this,
+                "Failed to open Customer Update Form: " + ex.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
+    });
+    }//GEN-LAST:event_CustomerUpdateBtnActionPerformed
 
     public void populateComboBox() {
 

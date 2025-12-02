@@ -104,5 +104,64 @@ public class CustomerModel {
         }
         return dtoList;
     }
+     
+     public static boolean updateCustomer(CustomerDto dto) throws SQLException {
+    Connection connection = DbConnection.getInstance();
+
+    String sql = "UPDATE customer SET customerName = ? ,customerContact = ? ,userId = ? ,email  = ? WHERE customerId = ?";
+    PreparedStatement pstm = connection.prepareStatement(sql);
+
+    pstm.setString(1,dto.getCusName());
+    pstm.setString(2,dto.getConNum());
+    pstm.setInt(3,dto.getUserId());
+    pstm.setString(4,dto.getEmail());
+    pstm.setString(5,dto.getCusId());
+
+    return pstm.executeUpdate() > 0;
+
+}
+     
+     public static CustomerDto searchCustomerId(String cusId) throws SQLException {
+    Connection connection = DbConnection.getInstance();
+    String sql = "SELECT * FROM customer WHERE customerId = ?";
+    PreparedStatement pstm = connection.prepareStatement(sql);
+    pstm.setString(1,cusId);
+    ResultSet resultSet = pstm.executeQuery();
+
+    CustomerDto cusDto = null;
+
+    if(resultSet.next()){
+        cusDto = new CustomerDto(
+                resultSet.getString(1),
+                resultSet.getString(2),
+                resultSet.getString(3),
+                resultSet.getInt(4),
+                resultSet.getString(5)
+        );
+    }
+    return  cusDto;
+}
+      public static List<String> getCmbCustomerId() throws SQLException {
+        Connection connection = null;
+        List<String> userIds = new ArrayList<>();
+        String query = "SELECT customerId FROM customer";
+
+        try {
+            connection = DbConnection.getInstance();
+            PreparedStatement pstm = connection.prepareStatement(query);
+            ResultSet resultSet = pstm.executeQuery();
+
+            while (resultSet.next()) {
+                userIds.add(resultSet.getString("customerId"));
+            }
+        } finally {
+
+            if (connection != null) {
+                // connection.close();
+            }
+        }
+
+        return userIds;
+    }
 
 }
