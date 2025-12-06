@@ -208,6 +208,7 @@ public void initialize() {
 
     private void CustomerSaveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomerSaveBtnActionPerformed
         // TODO add your handling code here:
+        CustomerModel model = new CustomerModel();
         String id = txtCusId.getText();
         String name = txtName.getText();
         String conNum = txtConNum.getText();
@@ -218,7 +219,7 @@ public void initialize() {
 
         boolean flag = false;
         try {
-            flag = CustomerModel.saveCustomer(dto);
+            flag = model.save(dto);
         } catch (SQLException ex) {
             System.getLogger(CustomerForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
@@ -306,7 +307,7 @@ public void initialize() {
         var model = new CustomerModel();
 
         try {
-            List<CustomerDto> dtoList = model.getAllCustomer();
+            List<CustomerDto> dtoList = model.getAll();
 
             // Get the table model from your JTable
             DefaultTableModel tableModel = (DefaultTableModel) tblCustomer.getModel();

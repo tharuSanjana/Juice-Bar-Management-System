@@ -17,9 +17,10 @@ import java.util.List;
  *
  * @author user
  */
-public class CustomerModel {
+public class CustomerModel extends BaseModel<CustomerDto> {
 
-    public static boolean saveCustomer(CustomerDto dto) throws SQLException {
+    @Override
+    public boolean save(CustomerDto dto) throws SQLException {
         Connection connection = DbConnection.getInstance();
 
         String sql = "INSERT INTO customer VALUES(?,?,?,?,?)";
@@ -32,6 +33,76 @@ public class CustomerModel {
         pstm.setString(5, dto.getEmail());
         boolean flag = pstm.executeUpdate() > 0;
         return flag;
+    }
+
+    @Override
+    public boolean update(CustomerDto dto) throws SQLException {
+        Connection connection = DbConnection.getInstance();
+
+        String sql = "UPDATE customer SET customerName = ? ,customerContact = ? ,userId = ? ,email  = ? WHERE customerId = ?";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+
+        pstm.setString(1, dto.getCusName());
+        pstm.setString(2, dto.getConNum());
+        pstm.setInt(3, dto.getUserId());
+        pstm.setString(4, dto.getEmail());
+        pstm.setString(5, dto.getCusId());
+
+        return pstm.executeUpdate() > 0;
+    }
+
+    @Override
+    public boolean delete(String id) throws SQLException {
+        Connection connection = DbConnection.getInstance();
+        String sql = "DELETE FROM customer WHERE customerId = ?";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        pstm.setString(1, id);
+        return pstm.executeUpdate() > 0;
+    }
+
+    @Override
+    public  CustomerDto search(String id) throws SQLException {
+        Connection connection = DbConnection.getInstance();
+        String sql = "SELECT * FROM customer WHERE customerId = ?";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        pstm.setString(1, id);
+        ResultSet resultSet = pstm.executeQuery();
+
+        CustomerDto cusDto = null;
+
+        if (resultSet.next()) {
+            cusDto = new CustomerDto(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getInt(4),
+                    resultSet.getString(5)
+            );
+        }
+        return cusDto;
+    }
+
+    @Override
+    public List<CustomerDto> getAll() throws SQLException {
+        Connection connection = DbConnection.getInstance();
+        String sql = "SELECT * FROM customer";
+
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        ResultSet resultSet = pstm.executeQuery();
+        ArrayList<CustomerDto> dtoList = new ArrayList<>();
+
+        while (resultSet.next()) {
+            dtoList.add(
+                    new CustomerDto(
+                            resultSet.getString(1),
+                            resultSet.getString(2),
+                            resultSet.getString(3),
+                            resultSet.getInt(4),
+                            resultSet.getString(5)
+                    )
+            );
+        }
+        return dtoList;
     }
 
     public static List<String> getCmbUserId() throws SQLException {
@@ -82,65 +153,6 @@ public class CustomerModel {
         }
     }
 
-    public ArrayList<CustomerDto> getAllCustomer() throws SQLException {
-        Connection connection = DbConnection.getInstance();
-        String sql = "SELECT * FROM customer";
-
-        PreparedStatement pstm = connection.prepareStatement(sql);
-        ResultSet resultSet = pstm.executeQuery();
-        ArrayList<CustomerDto> dtoList = new ArrayList<>();
-
-        while (resultSet.next()) {
-            dtoList.add(
-                    new CustomerDto(
-                            resultSet.getString(1),
-                            resultSet.getString(2),
-                            resultSet.getString(3),
-                            resultSet.getInt(4),
-                            resultSet.getString(5)
-                    )
-            );
-        }
-        return dtoList;
-    }
-
-    public static boolean updateCustomer(CustomerDto dto) throws SQLException {
-        Connection connection = DbConnection.getInstance();
-
-        String sql = "UPDATE customer SET customerName = ? ,customerContact = ? ,userId = ? ,email  = ? WHERE customerId = ?";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-
-        pstm.setString(1, dto.getCusName());
-        pstm.setString(2, dto.getConNum());
-        pstm.setInt(3, dto.getUserId());
-        pstm.setString(4, dto.getEmail());
-        pstm.setString(5, dto.getCusId());
-
-        return pstm.executeUpdate() > 0;
-
-    }
-
-    public static CustomerDto searchCustomerId(String cusId) throws SQLException {
-        Connection connection = DbConnection.getInstance();
-        String sql = "SELECT * FROM customer WHERE customerId = ?";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-        pstm.setString(1, cusId);
-        ResultSet resultSet = pstm.executeQuery();
-
-        CustomerDto cusDto = null;
-
-        if (resultSet.next()) {
-            cusDto = new CustomerDto(
-                    resultSet.getString(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getInt(4),
-                    resultSet.getString(5)
-            );
-        }
-        return cusDto;
-    }
-
     public static List<String> getCmbCustomerId() throws SQLException {
         Connection connection = null;
         List<String> userIds = new ArrayList<>();
@@ -163,13 +175,5 @@ public class CustomerModel {
 
         return userIds;
     }
-
-    public static boolean deleteCustomer(String id) throws SQLException {
-        Connection connection = DbConnection.getInstance();
-        String sql = "DELETE FROM customer WHERE customerId = ?";
-        PreparedStatement pstm = connection.prepareStatement(sql);
-        pstm.setString(1, id);
-        return pstm.executeUpdate() > 0;
-    }
-
+    
 }

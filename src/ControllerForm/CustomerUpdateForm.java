@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 package ControllerForm;
 
 import Dto.CustomerDto;
@@ -16,9 +15,8 @@ import javax.swing.JOptionPane;
  *
  * @author user
  */
+public class CustomerUpdateForm extends javax.swing.JFrame {
 
-public  class CustomerUpdateForm extends javax.swing.JFrame {
-    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CustomerUpdateForm.class.getName());
 
     /**
@@ -26,11 +24,9 @@ public  class CustomerUpdateForm extends javax.swing.JFrame {
      */
     public CustomerUpdateForm() throws SQLException {
         initComponents();
-    populateComboBox();
-       
+        populateComboBox();
+
     }
-     
-     
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -165,44 +161,46 @@ public  class CustomerUpdateForm extends javax.swing.JFrame {
 
     private void cmbCusIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCusIdActionPerformed
         // TODO add your handling code here:
+        CustomerModel model = new CustomerModel();
         String cusId = cmbCusId.getSelectedItem().toString();
+        CustomerDto cusDto = null;
         try {
-            CustomerDto cusDto = CustomerModel.searchCustomerId(cusId);
-            txtName.setText(cusDto.getCusName());
-            txtConNum.setText(cusDto.getConNum());
-            lblUserId.setText(String.valueOf(cusDto.getUserId()));
-            txtEmail.setText(cusDto.getEmail());
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            cusDto = model.search(cusId);
+        } catch (SQLException ex) {
+            System.getLogger(CustomerUpdateForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
+        //CustomerDto cusDto = CustomerModel.search(cusId);
+        txtName.setText(cusDto.getCusName());
+        txtConNum.setText(cusDto.getConNum());
+        lblUserId.setText(String.valueOf(cusDto.getUserId()));
+        txtEmail.setText(cusDto.getEmail());
     }
 
     public void populateComboBox() throws SQLException {
 
-         try {
-        List<String> dataFromDB = CustomerModel.getCmbCustomerId();
+        try {
+            List<String> dataFromDB = CustomerModel.getCmbCustomerId();
 
-        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
 
-        for (String id : dataFromDB) {
-            model.addElement(id);
+            for (String id : dataFromDB) {
+                model.addElement(id);
+            }
+
+            cmbCusId.setModel(model);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this,
+                    "Error loading Customer IDs: " + e.getMessage(),
+                    "Database Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
-
-        cmbCusId.setModel(model);
-
-    } catch (SQLException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this,
-                "Error loading Customer IDs: " + e.getMessage(),
-                "Database Error",
-                JOptionPane.ERROR_MESSAGE);
-    }
     }//GEN-LAST:event_cmbCusIdActionPerformed
 
     private void okBtnOnActionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnOnActionActionPerformed
         // TODO add your handling code here:
-
+        CustomerModel model = new CustomerModel();
         String id = cmbCusId.getSelectedItem().toString();
         String name = txtName.getText();
         String conNum = txtConNum.getText();
@@ -213,7 +211,7 @@ public  class CustomerUpdateForm extends javax.swing.JFrame {
 
         boolean flag = false;
         try {
-            flag = CustomerModel.updateCustomer(dto);
+            flag = model.update(dto);
         } catch (SQLException ex) {
             System.getLogger(CustomerForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
@@ -232,7 +230,7 @@ public  class CustomerUpdateForm extends javax.swing.JFrame {
 
     private void cancelBtnOnActionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnOnActionActionPerformed
         // TODO add your handling code here:
-         this.dispose();
+        this.dispose();
 
     }//GEN-LAST:event_cancelBtnOnActionActionPerformed
 
@@ -240,49 +238,49 @@ public  class CustomerUpdateForm extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-    /* Set the Nimbus look and feel */
-    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-     */
-    try {
-        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-            if ("Nimbus".equals(info.getName())) {
-                javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                break;
-            }
-        }
-    } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-        logger.log(java.util.logging.Level.SEVERE, null, ex);
-    }
-    //</editor-fold>
-
-    /* Create and display the form */
-    //java.awt.EventQueue.invokeLater(() -> new CustomerUpdateForm().setVisible(true));
-    try {
-        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-            if ("Nimbus".equals(info.getName())) {
-                javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                break;
-            }
-        }
-    } catch (Exception ex) {
-        ex.printStackTrace();
-    }
-
-    /* Create and display the form */
-    java.awt.EventQueue.invokeLater(() -> {
+         */
         try {
-            new CustomerUpdateForm().setVisible(true);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null,
-                    "Error loading form: " + e.getMessage(),
-                    "Database Error",
-                    JOptionPane.ERROR_MESSAGE);
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
-    });
-}
+        //</editor-fold>
+
+        /* Create and display the form */
+        //java.awt.EventQueue.invokeLater(() -> new CustomerUpdateForm().setVisible(true));
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> {
+            try {
+                new CustomerUpdateForm().setVisible(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null,
+                        "Error loading form: " + e.getMessage(),
+                        "Database Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        });
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
