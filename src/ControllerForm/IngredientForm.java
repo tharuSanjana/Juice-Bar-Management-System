@@ -74,6 +74,11 @@ public class IngredientForm extends javax.swing.JFrame {
         });
 
         IngredientUpdateBtn.setText("Update");
+        IngredientUpdateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IngredientUpdateBtnActionPerformed(evt);
+            }
+        });
 
         IngredientDeleteBtn.setText("Delete");
 
@@ -186,6 +191,22 @@ public class IngredientForm extends javax.swing.JFrame {
                     JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_IngredientSaveBtnActionPerformed
+
+    private void IngredientUpdateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngredientUpdateBtnActionPerformed
+        // TODO add your handling code here:
+        java.awt.EventQueue.invokeLater(() -> {
+        try {
+            IngredientUpdateForm form = new IngredientUpdateForm();
+            form.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            form.setVisible(true);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this,
+                "Failed to open Ingredient Update Form: " + ex.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
+    });
+    }//GEN-LAST:event_IngredientUpdateBtnActionPerformed
 
     public void loadAllIngredients() {
         var model = new IngredientsModel();

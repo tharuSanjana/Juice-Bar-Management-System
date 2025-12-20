@@ -36,7 +36,17 @@ public class IngredientsModel extends BaseModel<IngredientsDto>{
 
     @Override
     public boolean update(IngredientsDto dto) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+         Connection connection = DbConnection.getInstance();
+
+        String sql = "UPDATE ingredient SET ingredientName  = ? ,qtyOnHand  = ?  WHERE ingredientId  = ?";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+
+        pstm.setString(1, dto.getName());
+        pstm.setInt(2, dto.getQty());
+        pstm.setString(3, dto.getId());
+       
+
+        return pstm.executeUpdate() > 0;
     }
 
     @Override
@@ -46,8 +56,23 @@ public class IngredientsModel extends BaseModel<IngredientsDto>{
 
     @Override
     public IngredientsDto search(String id) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+ Connection connection = DbConnection.getInstance();
+        String sql = "SELECT * FROM ingredient WHERE ingredientId  = ?";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        pstm.setString(1, id);
+        ResultSet resultSet = pstm.executeQuery();
+
+        IngredientsDto ingDto = null;
+
+        if (resultSet.next()) {
+            ingDto = new IngredientsDto(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getInt(3)
+                    
+            );
+        }
+        return ingDto;    }
 
     @Override
     public List<IngredientsDto> getAll() throws SQLException {
@@ -70,5 +95,54 @@ public class IngredientsModel extends BaseModel<IngredientsDto>{
         }
         return dtoList;
     }
+    
+    public static List<String> getCmbIngredientsId() throws SQLException {
+        Connection connection = null;
+        List<String> ingIds = new ArrayList<>();
+        String query = "SELECT ingredientId  FROM ingredient";
+
+        try {
+            connection = DbConnection.getInstance();
+            PreparedStatement pstm = connection.prepareStatement(query);
+            ResultSet resultSet = pstm.executeQuery();
+
+            while (resultSet.next()) {
+                ingIds.add(resultSet.getString("ingredientId"));
+            }
+        } finally {
+
+            if (connection != null) {
+                // connection.close();
+            }
+        }
+
+        return ingIds;
+    }
+    
+    public static String getGenerateIngredientId() throws SQLException {
+        Connection connection = DbConnection.getInstance();
+
+        String sql = "SELECT ingredientId  FROM ingredient ORDER BY ingredientId  DESC LIMIT 1";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+
+        ResultSet resultSet = pstm.executeQuery();
+        if (resultSet.next()) {
+            return splitIngredientId(resultSet.getString(1));
+        }
+        return splitIngredientId(null);
+    }
+
+    private static String splitIngredientId(String currentIngredientId) {
+        if (currentIngredientId != null) {
+            String[] split = currentIngredientId.split("I0");
+
+            int id = Integer.parseInt(split[1]); //01
+            id++;
+            return "i00" + id;
+        } else {
+            return "i001";
+        }
+    }
+
     
 }
