@@ -38,7 +38,18 @@ public class ItemModel extends BaseModel<ItemDto> {
 
     @Override
     public boolean update(ItemDto dto) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Connection connection = DbConnection.getInstance();
+
+        String sql = "UPDATE item SET itemCategory = ? ,itemName = ? ,itemPrice = ?  WHERE itemId = ?";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+
+        pstm.setString(1, dto.getCategory());
+        pstm.setString(2, dto.getName());
+        pstm.setDouble(3, dto.getPrice());
+        pstm.setString(4, dto.getId());
+        
+
+        return pstm.executeUpdate() > 0;
     }
 
     @Override
@@ -48,7 +59,24 @@ public class ItemModel extends BaseModel<ItemDto> {
 
     @Override
     public ItemDto search(String id) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Connection connection = DbConnection.getInstance();
+        String sql = "SELECT * FROM item WHERE itemId = ?";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        pstm.setString(1, id);
+        ResultSet resultSet = pstm.executeQuery();
+
+        ItemDto cusDto = null;
+
+        if (resultSet.next()) {
+            cusDto = new ItemDto(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getDouble(4)
+                    
+            );
+        }
+        return cusDto;
     }
 
     @Override
@@ -99,5 +127,27 @@ public class ItemModel extends BaseModel<ItemDto> {
         }
     }
 
+     public static List<String> getCmbItemId() throws SQLException {
+        Connection connection = null;
+        List<String> userIds = new ArrayList<>();
+        String query = "SELECT itemId FROM item";
+
+        try {
+            connection = DbConnection.getInstance();
+            PreparedStatement pstm = connection.prepareStatement(query);
+            ResultSet resultSet = pstm.executeQuery();
+
+            while (resultSet.next()) {
+                userIds.add(resultSet.getString("itemId"));
+            }
+        } finally {
+
+            if (connection != null) {
+                // connection.close();
+            }
+        }
+
+        return userIds;
+    }
 
 }

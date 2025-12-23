@@ -75,6 +75,11 @@ public class ItemForm extends javax.swing.JFrame {
         });
 
         ItemUpdateBtn.setText("Update");
+        ItemUpdateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ItemUpdateBtnActionPerformed(evt);
+            }
+        });
 
         ItemDeleteBtn.setText("Delete");
 
@@ -205,6 +210,15 @@ public class ItemForm extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_ItemSaveBtnActionPerformed
+
+    private void ItemUpdateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ItemUpdateBtnActionPerformed
+        // TODO add your handling code here:
+        java.awt.EventQueue.invokeLater(() -> {
+            ItemUpdateForm form = new ItemUpdateForm();
+            form.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            form.setVisible(true);
+    });
+    }//GEN-LAST:event_ItemUpdateBtnActionPerformed
 
     private String generateItemId() {
         String itemId = null;
