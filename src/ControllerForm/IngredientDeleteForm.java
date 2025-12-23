@@ -4,6 +4,12 @@
  */
 package ControllerForm;
 
+import Dto.IngredientsDto;
+import Model.IngredientsModel;
+import javax.swing.DefaultComboBoxModel;
+import java.sql.SQLException;
+import java.util.List;
+import javax.swing.JOptionPane;
 /**
  *
  * @author user
@@ -15,8 +21,9 @@ public class IngredientDeleteForm extends javax.swing.JFrame {
     /**
      * Creates new form IngredientDeleteForm
      */
-    public IngredientDeleteForm() {
+    public IngredientDeleteForm() throws SQLException {
         initComponents();
+        populateComboBox();
     }
 
     /**
@@ -28,22 +35,171 @@ public class IngredientDeleteForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        cmbIngredintId = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        txtName = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtQty = new javax.swing.JTextField();
+        okBtnOnAction = new javax.swing.JButton();
+        cancelBtnOnAction = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText(" ID");
+
+        cmbIngredintId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbIngredintId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbIngredintIdActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Name");
+
+        jLabel4.setText("Qty");
+
+        okBtnOnAction.setText("Ok");
+        okBtnOnAction.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okBtnOnActionActionPerformed(evt);
+            }
+        });
+
+        cancelBtnOnAction.setText("Cancel");
+        cancelBtnOnAction.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelBtnOnActionActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbIngredintId, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(okBtnOnAction)
+                                .addGap(40, 40, 40)
+                                .addComponent(cancelBtnOnAction))
+                            .addComponent(txtQty, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(99, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(94, 94, 94)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbIngredintId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(48, 48, 48)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(44, 44, 44)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtQty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(93, 93, 93)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(okBtnOnAction)
+                    .addComponent(cancelBtnOnAction))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cmbIngredintIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbIngredintIdActionPerformed
+        try {
+        IngredientsModel model = new IngredientsModel();
+
+        if (cmbIngredintId.getSelectedItem() == null) {
+            return;
+        }
+
+        String ingId = cmbIngredintId.getSelectedItem().toString();
+        IngredientsDto ingDto = model.search(ingId);
+
+        if (ingDto != null) {
+            txtName.setText(ingDto.getName());
+            txtQty.setText(String.valueOf(ingDto.getQty()));
+        } else {
+            txtName.setText("");
+            txtQty.setText("");
+            JOptionPane.showMessageDialog(this, "Ingredient not found");
+        }
+
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Database Error!");
+    }
+        
+    }//GEN-LAST:event_cmbIngredintIdActionPerformed
+
+    private void okBtnOnActionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnOnActionActionPerformed
+        // TODO add your handling code here:
+         IngredientsModel model = new IngredientsModel();
+        String id = cmbIngredintId.getSelectedItem().toString();
+
+        boolean flag = false;
+        try {
+            flag = model.delete(id);
+        } catch (SQLException ex) {
+            System.getLogger(CustomerForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        if (flag) {
+            JOptionPane.showMessageDialog(this,
+                    "Ingredient deleted successfully! ",
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Failed to delete Ingredient.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_okBtnOnActionActionPerformed
+
+    private void cancelBtnOnActionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnOnActionActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_cancelBtnOnActionActionPerformed
+
+    public void populateComboBox() throws SQLException {
+
+        try {
+            List<String> dataFromDB = IngredientsModel.getCmbIngredientsId();
+
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+
+            for (String id : dataFromDB) {
+                model.addElement(id);
+            }
+
+            cmbIngredintId.setModel(model);
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error loading Customer IDs: " + e.getMessage(),
+                    "Database Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -66,9 +222,23 @@ public class IngredientDeleteForm extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new IngredientDeleteForm().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> {
+            try {
+                new IngredientDeleteForm().setVisible(true);
+            } catch (SQLException ex) {
+                System.getLogger(IngredientDeleteForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cancelBtnOnAction;
+    private javax.swing.JComboBox<String> cmbIngredintId;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JButton okBtnOnAction;
+    private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtQty;
     // End of variables declaration//GEN-END:variables
 }

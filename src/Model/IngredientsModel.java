@@ -17,11 +17,11 @@ import java.util.ArrayList;
  *
  * @author user
  */
-public class IngredientsModel extends BaseModel<IngredientsDto>{
+public class IngredientsModel extends BaseModel<IngredientsDto> {
 
     @Override
     public boolean save(IngredientsDto dto) throws SQLException {
-         Connection connection = DbConnection.getInstance();
+        Connection connection = DbConnection.getInstance();
 
         String sql = "INSERT INTO ingredient VALUES(?,?,?)";
         PreparedStatement pstm = connection.prepareStatement(sql);
@@ -29,14 +29,14 @@ public class IngredientsModel extends BaseModel<IngredientsDto>{
         pstm.setString(1, dto.getId());
         pstm.setString(2, dto.getName());
         pstm.setInt(3, dto.getQty());
-       
+
         boolean flag = pstm.executeUpdate() > 0;
         return flag;
     }
 
     @Override
     public boolean update(IngredientsDto dto) throws SQLException {
-         Connection connection = DbConnection.getInstance();
+        Connection connection = DbConnection.getInstance();
 
         String sql = "UPDATE ingredient SET ingredientName  = ? ,qtyOnHand  = ?  WHERE ingredientId  = ?";
         PreparedStatement pstm = connection.prepareStatement(sql);
@@ -44,19 +44,22 @@ public class IngredientsModel extends BaseModel<IngredientsDto>{
         pstm.setString(1, dto.getName());
         pstm.setInt(2, dto.getQty());
         pstm.setString(3, dto.getId());
-       
 
         return pstm.executeUpdate() > 0;
     }
 
     @Override
     public boolean delete(String id) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Connection connection = DbConnection.getInstance();
+        String sql = "DELETE FROM ingredient WHERE ingredientId = ?";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        pstm.setString(1, id);
+        return pstm.executeUpdate() > 0;
     }
 
     @Override
     public IngredientsDto search(String id) throws SQLException {
- Connection connection = DbConnection.getInstance();
+        Connection connection = DbConnection.getInstance();
         String sql = "SELECT * FROM ingredient WHERE ingredientId  = ?";
         PreparedStatement pstm = connection.prepareStatement(sql);
         pstm.setString(1, id);
@@ -69,14 +72,14 @@ public class IngredientsModel extends BaseModel<IngredientsDto>{
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getInt(3)
-                    
             );
         }
-        return ingDto;    }
+        return ingDto;
+    }
 
     @Override
     public List<IngredientsDto> getAll() throws SQLException {
-         Connection connection = DbConnection.getInstance();
+        Connection connection = DbConnection.getInstance();
         String sql = "SELECT * FROM ingredient";
 
         PreparedStatement pstm = connection.prepareStatement(sql);
@@ -89,13 +92,12 @@ public class IngredientsModel extends BaseModel<IngredientsDto>{
                             resultSet.getString(1),
                             resultSet.getString(2),
                             resultSet.getInt(3)
-                           
                     )
             );
         }
         return dtoList;
     }
-    
+
     public static List<String> getCmbIngredientsId() throws SQLException {
         Connection connection = null;
         List<String> ingIds = new ArrayList<>();
@@ -118,7 +120,7 @@ public class IngredientsModel extends BaseModel<IngredientsDto>{
 
         return ingIds;
     }
-    
+
     public static String getGenerateIngredientId() throws SQLException {
         Connection connection = DbConnection.getInstance();
 
@@ -138,11 +140,10 @@ public class IngredientsModel extends BaseModel<IngredientsDto>{
 
             int id = Integer.parseInt(split[1]); //01
             id++;
-            return "i00" + id;
+            return "I00" + id;
         } else {
-            return "i001";
+            return "I001";
         }
     }
 
-    
 }

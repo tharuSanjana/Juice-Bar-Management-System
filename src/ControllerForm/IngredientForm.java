@@ -11,28 +11,29 @@ import javax.swing.table.DefaultTableModel;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author user
  */
 public class IngredientForm extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(IngredientForm.class.getName());
 
     /**
      * Creates new form IngredientForm
      */
     public IngredientForm() {
-        
+
         initComponents();
         initialize();
     }
 
     public void initialize() {
-       loadAllIngredients();
+        generateIngredientId();
+        loadAllIngredients();
         //populateComboBoxEmpType();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -81,6 +82,11 @@ public class IngredientForm extends javax.swing.JFrame {
         });
 
         IngredientDeleteBtn.setText("Delete");
+        IngredientDeleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IngredientDeleteBtnActionPerformed(evt);
+            }
+        });
 
         tblIngredient.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -165,11 +171,10 @@ public class IngredientForm extends javax.swing.JFrame {
 
     private void IngredientSaveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngredientSaveBtnActionPerformed
         // TODO add your handling code here:
-         IngredientsModel model = new IngredientsModel();
+        IngredientsModel model = new IngredientsModel();
         String id = txtIngredientsId.getText();
         String name = txtIngredientName.getText();
         int qty = Integer.parseInt(txtIngredientQty.getText());
-        
 
         var dto = new IngredientsDto(id, name, qty);
 
@@ -195,18 +200,46 @@ public class IngredientForm extends javax.swing.JFrame {
     private void IngredientUpdateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngredientUpdateBtnActionPerformed
         // TODO add your handling code here:
         java.awt.EventQueue.invokeLater(() -> {
-        try {
-            IngredientUpdateForm form = new IngredientUpdateForm();
-            form.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
-            form.setVisible(true);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this,
-                "Failed to open Ingredient Update Form: " + ex.getMessage(),
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
-        }
-    });
+            try {
+                IngredientUpdateForm form = new IngredientUpdateForm();
+                form.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+                form.setVisible(true);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this,
+                        "Failed to open Ingredient Update Form: " + ex.getMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        });
     }//GEN-LAST:event_IngredientUpdateBtnActionPerformed
+
+    private void IngredientDeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngredientDeleteBtnActionPerformed
+        // TODO add your handling code here:
+        java.awt.EventQueue.invokeLater(() -> {
+            try {
+                IngredientDeleteForm form = new IngredientDeleteForm();
+                form.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+                form.setVisible(true);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this,
+                        "Failed to open Ingredient Delete Form: " + ex.getMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        });
+    }//GEN-LAST:event_IngredientDeleteBtnActionPerformed
+
+    private String generateIngredientId() {
+        String ingId = null;
+        try {
+            ingId = IngredientsModel.getGenerateIngredientId();
+            txtIngredientsId.setText(ingId);
+        } catch (SQLException e) {
+            // new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
+
+        return ingId;
+    }
 
     public void loadAllIngredients() {
         var model = new IngredientsModel();
@@ -226,7 +259,7 @@ public class IngredientForm extends javax.swing.JFrame {
                     dto.getId(),
                     dto.getName(),
                     dto.getQty()
-                    
+
                 };
                 tableModel.addRow(rowData);  // <-- Correct way
             }
@@ -247,7 +280,6 @@ public class IngredientForm extends javax.swing.JFrame {
         }
     }
 
-    
     /**
      * @param args the command line arguments
      */
