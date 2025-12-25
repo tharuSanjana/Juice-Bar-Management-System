@@ -1,5 +1,7 @@
 package ControllerForm;
 
+import java.sql.SQLException;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -247,7 +249,12 @@ public class DashboardForm extends javax.swing.JFrame {
     private void itemDetailsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemDetailsBtnActionPerformed
         // TODO add your handling code here:
         java.awt.EventQueue.invokeLater(() -> {
-        ItemDetailsForm itemDetailsForm = new ItemDetailsForm();
+        ItemDetailsForm itemDetailsForm = null;
+            try {
+                itemDetailsForm = new ItemDetailsForm();
+            } catch (SQLException ex) {
+                System.getLogger(DashboardForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
         itemDetailsForm.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
         itemDetailsForm.setVisible(true);
     });
