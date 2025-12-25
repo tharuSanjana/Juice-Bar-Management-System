@@ -9,14 +9,14 @@ package ControllerForm;
  *
  * @author user
  */
-public class SupplierDetailsForm extends javax.swing.JFrame {
+public class IngredientDetailsForm extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SupplierDetailsForm.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(IngredientDetailsForm.class.getName());
 
     /**
      * Creates new form SupplierForm
      */
-    public SupplierDetailsForm() {
+    public IngredientDetailsForm() {
         initComponents();
     }
 
@@ -177,7 +177,7 @@ public class SupplierDetailsForm extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new SupplierDetailsForm().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new IngredientDetailsForm().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

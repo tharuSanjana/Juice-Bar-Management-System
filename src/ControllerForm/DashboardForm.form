@@ -64,7 +64,7 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
-                      <Component id="supplierDetailsBtn" min="-2" pref="234" max="-2" attributes="0"/>
+                      <Component id="ingredientDetailsBtn" min="-2" pref="234" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
@@ -97,7 +97,7 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="suppliersBtn" min="-2" pref="48" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="supplierDetailsBtn" min="-2" pref="48" max="-2" attributes="0"/>
+              <Component id="ingredientDetailsBtn" min="-2" pref="48" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
               <Component id="existBtn" min="-2" pref="48" max="-2" attributes="0"/>
               <EmptySpace pref="338" max="32767" attributes="0"/>
@@ -178,12 +178,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="suppliersBtnActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="supplierDetailsBtn">
+    <Component class="javax.swing.JButton" name="ingredientDetailsBtn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Supplier Details"/>
+        <Property name="text" type="java.lang.String" value="Ingredint Details"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="supplierDetailsBtnActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ingredientDetailsBtnActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="existBtn">

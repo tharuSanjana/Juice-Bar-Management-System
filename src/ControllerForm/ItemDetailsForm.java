@@ -44,12 +44,10 @@ public class ItemDetailsForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel3 = new javax.swing.JLabel();
-        UpdateBtnOnAction = new javax.swing.JButton();
         txtIngName = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         SaveBtnOnAction = new javax.swing.JButton();
         txtItemName = new javax.swing.JTextField();
-        DeleteBtnOnAction = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -63,8 +61,6 @@ public class ItemDetailsForm extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setText("Item Details Form");
 
-        UpdateBtnOnAction.setText("Update");
-
         jLabel5.setText("Ingredient Name");
 
         SaveBtnOnAction.setText("Save");
@@ -73,8 +69,6 @@ public class ItemDetailsForm extends javax.swing.JFrame {
                 SaveBtnOnActionActionPerformed(evt);
             }
         });
-
-        DeleteBtnOnAction.setText("Delete");
 
         jLabel4.setText("Ingredient ID");
 
@@ -137,11 +131,7 @@ public class ItemDetailsForm extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(SaveBtnOnAction)
-                            .addGap(60, 60, 60)
-                            .addComponent(UpdateBtnOnAction)
-                            .addGap(60, 60, 60)
-                            .addComponent(DeleteBtnOnAction)
-                            .addGap(13, 13, 13))
+                            .addGap(277, 277, 277))
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -174,10 +164,7 @@ public class ItemDetailsForm extends javax.swing.JFrame {
                             .addComponent(txtIngName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))
                         .addGap(133, 133, 133)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(SaveBtnOnAction)
-                            .addComponent(UpdateBtnOnAction)
-                            .addComponent(DeleteBtnOnAction)))
+                        .addComponent(SaveBtnOnAction))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -344,9 +331,7 @@ public class ItemDetailsForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton DeleteBtnOnAction;
     private javax.swing.JButton SaveBtnOnAction;
-    private javax.swing.JButton UpdateBtnOnAction;
     private javax.swing.JComboBox<String> cmbIngredientId;
     private javax.swing.JComboBox<String> cmbItemId;
     private javax.swing.JLabel jLabel1;

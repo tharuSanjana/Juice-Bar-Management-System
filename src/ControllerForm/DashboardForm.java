@@ -40,7 +40,7 @@ public class DashboardForm extends javax.swing.JFrame {
         ingredientsBtn = new javax.swing.JButton();
         itemDetailsBtn = new javax.swing.JButton();
         suppliersBtn = new javax.swing.JButton();
-        supplierDetailsBtn = new javax.swing.JButton();
+        ingredientDetailsBtn = new javax.swing.JButton();
         existBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -104,10 +104,10 @@ public class DashboardForm extends javax.swing.JFrame {
             }
         });
 
-        supplierDetailsBtn.setText("Supplier Details");
-        supplierDetailsBtn.addActionListener(new java.awt.event.ActionListener() {
+        ingredientDetailsBtn.setText("Ingredint Details");
+        ingredientDetailsBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                supplierDetailsBtnActionPerformed(evt);
+                ingredientDetailsBtnActionPerformed(evt);
             }
         });
 
@@ -154,7 +154,7 @@ public class DashboardForm extends javax.swing.JFrame {
                         .addComponent(itemDetailsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(47, 47, 47)
-                        .addComponent(supplierDetailsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(ingredientDetailsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addComponent(suppliersBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -182,7 +182,7 @@ public class DashboardForm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(suppliersBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(supplierDetailsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ingredientDetailsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(existBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(338, Short.MAX_VALUE))
@@ -269,14 +269,14 @@ public class DashboardForm extends javax.swing.JFrame {
     });
     }//GEN-LAST:event_suppliersBtnActionPerformed
 
-    private void supplierDetailsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierDetailsBtnActionPerformed
+    private void ingredientDetailsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingredientDetailsBtnActionPerformed
         // TODO add your handling code here:
         java.awt.EventQueue.invokeLater(() -> {
-        SupplierDetailsForm supplierDetailsForm = new SupplierDetailsForm();
+        IngredientDetailsForm supplierDetailsForm = new IngredientDetailsForm();
         supplierDetailsForm.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
         supplierDetailsForm.setVisible(true);
     });
-    }//GEN-LAST:event_supplierDetailsBtnActionPerformed
+    }//GEN-LAST:event_ingredientDetailsBtnActionPerformed
 
     private void existBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_existBtnActionPerformed
         // TODO add your handling code here:
@@ -312,13 +312,13 @@ public class DashboardForm extends javax.swing.JFrame {
     private javax.swing.JButton customerBtn;
     private javax.swing.JButton employeeBtn;
     private javax.swing.JButton existBtn;
+    private javax.swing.JButton ingredientDetailsBtn;
     private javax.swing.JButton ingredientsBtn;
     private javax.swing.JButton itemBtn;
     private javax.swing.JButton itemDetailsBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton orderDetailsBtn;
     private javax.swing.JButton placeOrderBtn;
-    private javax.swing.JButton supplierDetailsBtn;
     private javax.swing.JButton suppliersBtn;
     // End of variables declaration//GEN-END:variables
 }

@@ -51,11 +51,7 @@
                   <Group type="103" alignment="0" groupAlignment="1" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="SaveBtnOnAction" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
-                          <Component id="UpdateBtnOnAction" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
-                          <Component id="DeleteBtnOnAction" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="277" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel5" min="-2" pref="187" max="-2" attributes="0"/>
@@ -98,11 +94,7 @@
                           <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="133" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="SaveBtnOnAction" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="UpdateBtnOnAction" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="DeleteBtnOnAction" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="SaveBtnOnAction" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
@@ -123,11 +115,6 @@
         <Property name="text" type="java.lang.String" value="Item Details Form"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="UpdateBtnOnAction">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Update"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JTextField" name="txtIngName">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
@@ -144,11 +131,6 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtItemName">
-    </Component>
-    <Component class="javax.swing.JButton" name="DeleteBtnOnAction">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Delete"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
