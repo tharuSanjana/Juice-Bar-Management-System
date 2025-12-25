@@ -82,6 +82,11 @@ public class ItemForm extends javax.swing.JFrame {
         });
 
         ItemDeleteBtn.setText("Delete");
+        ItemDeleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ItemDeleteBtnActionPerformed(evt);
+            }
+        });
 
         tblItem.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -214,11 +219,30 @@ public class ItemForm extends javax.swing.JFrame {
     private void ItemUpdateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ItemUpdateBtnActionPerformed
         // TODO add your handling code here:
         java.awt.EventQueue.invokeLater(() -> {
-            ItemUpdateForm form = new ItemUpdateForm();
+            ItemUpdateForm form = null;
+            try {
+                form = new ItemUpdateForm();
+            } catch (SQLException ex) {
+                System.getLogger(ItemForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
             form.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
             form.setVisible(true);
     });
     }//GEN-LAST:event_ItemUpdateBtnActionPerformed
+
+    private void ItemDeleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ItemDeleteBtnActionPerformed
+        // TODO add your handling code here:
+        java.awt.EventQueue.invokeLater(() -> {
+            ItemDeleteForm form = null;
+            try {
+                form = new ItemDeleteForm();
+            } catch (SQLException ex) {
+                System.getLogger(ItemForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+            form.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            form.setVisible(true);
+    });
+    }//GEN-LAST:event_ItemDeleteBtnActionPerformed
 
     private String generateItemId() {
         String itemId = null;
