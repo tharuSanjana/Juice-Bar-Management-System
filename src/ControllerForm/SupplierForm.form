@@ -38,9 +38,9 @@
                   </Group>
                   <Group type="103" alignment="0" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="jLabel4" min="-2" pref="187" max="-2" attributes="0"/>
+                          <Component id="Address" min="-2" pref="187" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txtConNumber" min="-2" pref="156" max="-2" attributes="0"/>
+                          <Component id="txtAddress" min="-2" pref="156" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel2" min="-2" pref="187" max="-2" attributes="0"/>
@@ -60,7 +60,7 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel5" min="-2" pref="187" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txtAddress" min="-2" pref="156" max="-2" attributes="0"/>
+                          <Component id="txtCon" min="-2" pref="156" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -89,12 +89,12 @@
                       </Group>
                       <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtConNumber" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="Address" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtAddress" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtAddress" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtCon" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="133" max="-2" attributes="0"/>
@@ -123,20 +123,20 @@
         <Property name="text" type="java.lang.String" value="Supplier Form"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtAddress">
+    <Component class="javax.swing.JTextField" name="txtCon">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Address"/>
+        <Property name="text" type="java.lang.String" value="Contact Number"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtId">
     </Component>
     <Component class="javax.swing.JTextField" name="txtName">
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel4">
+    <Component class="javax.swing.JLabel" name="Address">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Contact Number"/>
+        <Property name="text" type="java.lang.String" value="Address"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
@@ -144,7 +144,7 @@
         <Property name="text" type="java.lang.String" value=" ID"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtConNumber">
+    <Component class="javax.swing.JTextField" name="txtAddress">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>

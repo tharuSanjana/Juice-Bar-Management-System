@@ -228,6 +228,7 @@ public class CustomerUpdateForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_okBtnOnActionActionPerformed
 
+    
     private void cancelBtnOnActionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnOnActionActionPerformed
         // TODO add your handling code here:
         this.dispose();

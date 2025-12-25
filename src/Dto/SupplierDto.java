@@ -11,8 +11,9 @@ package Dto;
 public class SupplierDto {
     private String id;
     private String name;
+     private String address;
     private String conNum;
-    private String address;
+   
 
     public String getId() {
         return id;
@@ -46,10 +47,11 @@ public class SupplierDto {
         this.address = address;
     }
 
-    public SupplierDto(String id, String name, String conNum, String address) {
+    public SupplierDto(String id, String name, String address ,String conNum) {
         this.id = id;
         this.name = name;
-        this.conNum = conNum;
         this.address = address;
+        this.conNum = conNum;
+        
     }
 }

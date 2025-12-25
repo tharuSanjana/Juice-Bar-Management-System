@@ -11,13 +11,12 @@ import javax.swing.table.DefaultTableModel;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author user
  */
 public class SupplierForm extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SupplierForm.class.getName());
 
     /**
@@ -27,11 +26,11 @@ public class SupplierForm extends javax.swing.JFrame {
         initComponents();
         initialize();
     }
-    
+
     public void initialize() {
         generateSupplierId();
         loadAllSupplier();
-       
+
     }
 
     /**
@@ -44,13 +43,13 @@ public class SupplierForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel3 = new javax.swing.JLabel();
-        txtAddress = new javax.swing.JTextField();
+        txtCon = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
         txtName = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        Address = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        txtConNumber = new javax.swing.JTextField();
+        txtAddress = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         SaveBtnOnAction = new javax.swing.JButton();
         UpdateBtnOnAction = new javax.swing.JButton();
@@ -63,9 +62,9 @@ public class SupplierForm extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setText("Supplier Form");
 
-        jLabel5.setText("Address");
+        jLabel5.setText("Contact Number");
 
-        jLabel4.setText("Contact Number");
+        Address.setText("Address");
 
         jLabel1.setText(" ID");
 
@@ -123,9 +122,9 @@ public class SupplierForm extends javax.swing.JFrame {
                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Address, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtConNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -141,7 +140,7 @@ public class SupplierForm extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtCon, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(58, 58, 58))
@@ -163,11 +162,11 @@ public class SupplierForm extends javax.swing.JFrame {
                             .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(49, 49, 49)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(txtConNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Address)
+                            .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(43, 43, 43)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))
                         .addGap(133, 133, 133)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -185,11 +184,12 @@ public class SupplierForm extends javax.swing.JFrame {
 
     private void SaveBtnOnActionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveBtnOnActionActionPerformed
         // TODO add your handling code here:
-         SupplierModel model = new SupplierModel();
+        SupplierModel model = new SupplierModel();
         String id = txtId.getText();
         String name = txtName.getText();
-        String conNum = txtConNumber.getText();
-        String address = txtAddress.getText();
+        String address = txtCon.getText();
+        String conNum = txtAddress.getText();
+        
 
         var dto = new SupplierDto(id, name, conNum, address);
 
@@ -205,7 +205,7 @@ public class SupplierForm extends javax.swing.JFrame {
                     "Supplier saved successfully! ",
                     "Success",
                     JOptionPane.INFORMATION_MESSAGE);
-             clearFields();
+            clearFields();
         } else {
             JOptionPane.showMessageDialog(this,
                     "Failed to save supplier.",
@@ -225,7 +225,7 @@ public class SupplierForm extends javax.swing.JFrame {
 
         return id;
     }
-    
+
     public void loadAllSupplier() {
         var model = new SupplierModel();
 
@@ -245,6 +245,8 @@ public class SupplierForm extends javax.swing.JFrame {
                     dto.getName(),
                     dto.getConNum(),
                     dto.getAddress()
+                    
+                    
                 };
                 tableModel.addRow(rowData);  // <-- Correct way
             }
@@ -263,22 +265,39 @@ public class SupplierForm extends javax.swing.JFrame {
             );
             e.printStackTrace();
         }
-}
+    }
 
-      private void clearFields() {
-   
-    txtName.setText("");
-    txtConNumber.setText("");
-    txtAddress.setText("");
+    private void clearFields() {
+
+        txtName.setText("");
+        txtCon.setText("");
+        txtAddress.setText("");
+        
+
+    }
+
     
-}
-
     private void UpdateBtnOnActionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateBtnOnActionActionPerformed
         // TODO add your handling code here:
+        java.awt.EventQueue.invokeLater(() -> {
+            SupplierUpdateForm form = null;
+            try {
+                form = new SupplierUpdateForm();
+            } catch (SQLException ex) {
+                System.getLogger(SupplierForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+            form.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            form.setVisible(true);
+        });
     }//GEN-LAST:event_UpdateBtnOnActionActionPerformed
 
     private void DeleteBtnOnActionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteBtnOnActionActionPerformed
         // TODO add your handling code here:
+        java.awt.EventQueue.invokeLater(() -> {
+            SupplierDeleteForm form = new SupplierDeleteForm();
+            form.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+            form.setVisible(true);
+        });
     }//GEN-LAST:event_DeleteBtnOnActionActionPerformed
 
     /**
@@ -307,18 +326,18 @@ public class SupplierForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Address;
     private javax.swing.JButton DeleteBtnOnAction;
     private javax.swing.JButton SaveBtnOnAction;
     private javax.swing.JButton UpdateBtnOnAction;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblSupplier;
     private javax.swing.JTextField txtAddress;
-    private javax.swing.JTextField txtConNumber;
+    private javax.swing.JTextField txtCon;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtName;
     // End of variables declaration//GEN-END:variables
