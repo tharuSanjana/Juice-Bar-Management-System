@@ -1,23 +1,39 @@
 package ControllerForm;
 
+import ControllerForm.CustomerUpdateForm;
+import Dto.IngredientDetailDto;
+import Model.IngredientDetailModel;
+import Model.IngredientsModel;
+import Model.SupplierModel;
+import java.sql.SQLException;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author user
  */
 public class IngredientDetailsForm extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(IngredientDetailsForm.class.getName());
 
     /**
      * Creates new form SupplierForm
      */
-    public IngredientDetailsForm() {
+    public IngredientDetailsForm() throws SQLException {
         initComponents();
+        populateComboBox();
+        populateComboBoxSup();
+        setDate();
+        loadAllIngredientDetails();
     }
 
     /**
@@ -31,18 +47,18 @@ public class IngredientDetailsForm extends javax.swing.JFrame {
 
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtDate = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        txtQty = new javax.swing.JTextField();
+        SaveBtnOnAction = new javax.swing.JButton();
+        UpdateBtnOnAction = new javax.swing.JButton();
+        DeleteBtnOnAction = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblSuplierDetails = new javax.swing.JTable();
+        cmbIngId = new javax.swing.JComboBox<>();
+        cmbSupId = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,13 +73,18 @@ public class IngredientDetailsForm extends javax.swing.JFrame {
 
         jLabel5.setText("Qty");
 
-        jButton1.setText("Save");
+        SaveBtnOnAction.setText("Save");
+        SaveBtnOnAction.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SaveBtnOnActionActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Update");
+        UpdateBtnOnAction.setText("Update");
 
-        jButton3.setText("Delete");
+        DeleteBtnOnAction.setText("Delete");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblSuplierDetails.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -75,7 +96,21 @@ public class IngredientDetailsForm extends javax.swing.JFrame {
                 " Supplier ID", "Ingredient ID", "Date", "Qty"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblSuplierDetails);
+
+        cmbIngId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbIngId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbIngIdActionPerformed(evt);
+            }
+        });
+
+        cmbSupId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbSupId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbSupIdActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -84,39 +119,39 @@ public class IngredientDetailsForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(319, 319, 319)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(517, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(98, 98, 98)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addGap(60, 60, 60)
-                                .addComponent(jButton2)
-                                .addGap(60, 60, 60)
-                                .addComponent(jButton3)
-                                .addGap(13, 13, 13))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(SaveBtnOnAction)
+                                    .addGap(60, 60, 60)
+                                    .addComponent(UpdateBtnOnAction)
+                                    .addGap(60, 60, 60)
+                                    .addComponent(DeleteBtnOnAction)
+                                    .addGap(13, 13, 13))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtQty, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(cmbSupId, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 143, Short.MAX_VALUE)
+                        .addComponent(cmbIngId, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(80, 80, 80))
+                .addGap(91, 91, 91))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,36 +160,173 @@ public class IngredientDetailsForm extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(66, 66, 66)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(69, 69, 69)
+                                .addComponent(jLabel1)
+                                .addGap(43, 43, 43))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbSupId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)))
+                        .addGap(15, 15, 15)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(49, 49, 49)
+                            .addComponent(cmbIngId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGap(41, 41, 41)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(43, 43, 43)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtQty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))
                         .addGap(133, 133, 133)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2)
-                            .addComponent(jButton3)))
+                            .addComponent(SaveBtnOnAction)
+                            .addComponent(UpdateBtnOnAction)
+                            .addComponent(DeleteBtnOnAction)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
+                        .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(540, Short.MAX_VALUE))
+                .addContainerGap(557, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cmbIngIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbIngIdActionPerformed
+        // TODO add your handling code here:
+        IngredientsModel model = new IngredientsModel();
+        String id = cmbIngId.getSelectedItem().toString();
+        //IngredientDetailDto ingDto = null;
+        try {
+            model.search(id);
+        } catch (SQLException ex) {
+            System.getLogger(CustomerUpdateForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+
+    }
+
+    public void populateComboBox() throws SQLException {
+
+        List<String> dataFromDB = IngredientsModel.getCmbIngredientsId();
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        for (String id : dataFromDB) {
+            model.addElement(id);
+        }
+        cmbIngId.setModel(model);
+    }//GEN-LAST:event_cmbIngIdActionPerformed
+
+    private void cmbSupIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSupIdActionPerformed
+        // TODO add your handling code here:
+        SupplierModel model = new SupplierModel();
+        String id = cmbSupId.getSelectedItem().toString();
+        //IngredientDetailDto ingDto = null;
+        try {
+            model.search(id);
+        } catch (SQLException ex) {
+            System.getLogger(CustomerUpdateForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+
+    }
+
+    public void populateComboBoxSup() throws SQLException {
+
+        List<String> dataFromDB = SupplierModel.getCmbSupplierId();
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        for (String id : dataFromDB) {
+            model.addElement(id);
+        }
+        cmbSupId.setModel(model);
+
+
+    }//GEN-LAST:event_cmbSupIdActionPerformed
+
+    private void SaveBtnOnActionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveBtnOnActionActionPerformed
+        // TODO add your handling code here:
+         IngredientDetailModel model = new IngredientDetailModel();
+        String supId = cmbSupId.getSelectedItem().toString();
+        String ingId = cmbIngId.getSelectedItem().toString();
+        String date = txtDate.getText();
+        double qty = Double.parseDouble(txtQty.getText());;
+
+         var dto = new IngredientDetailDto(supId, ingId, date,qty);
+
+        boolean flag = false;
+        try {
+            flag = model.save(dto);
+        } catch (SQLException ex) {
+            System.getLogger(CustomerForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        if (flag) {
+            JOptionPane.showMessageDialog(this,
+                    "Ingredient Details saved successfully! ",
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE);
+            clearFields();
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Failed to save Ingredient Details.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_SaveBtnOnActionActionPerformed
+
+    public void setDate() {
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        txtDate.setText(today.format(formatter));
+    }
+
+    public void loadAllIngredientDetails() {
+        var model = new IngredientDetailModel();
+
+        try {
+            List<IngredientDetailDto> dtoList = model.getAll();
+
+            // Get the table model from your JTable
+            DefaultTableModel tableModel = (DefaultTableModel) tblSuplierDetails.getModel();
+
+            // Clear existing rows
+            tableModel.setRowCount(0);
+
+            // Add rows to the table
+            for (IngredientDetailDto dto : dtoList) {
+                Object[] rowData = {
+                    dto.getSupId(),
+                    dto.getIngId(),
+                    dto.getDate(),
+                    dto.getQty()
+
+                };
+                tableModel.addRow(rowData);  // <-- Correct way
+            }
+
+            // Optionally select the first row
+            if (tableModel.getRowCount() > 0) {
+                tblSuplierDetails.setRowSelectionInterval(0, 0);
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Error loading ingredientDetails data:\n" + e.getMessage(),
+                    "Database Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            e.printStackTrace();
+        }
+    }
+    
+     private void clearFields() {
+
+        txtDate.setText("");
+        txtQty.setText("");
+        
+
+    }
     /**
      * @param args the command line arguments
      */
@@ -177,23 +349,29 @@ public class IngredientDetailsForm extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new IngredientDetailsForm().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> {
+            try {
+                new IngredientDetailsForm().setVisible(true);
+            } catch (SQLException ex) {
+                System.getLogger(IngredientDetailsForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton DeleteBtnOnAction;
+    private javax.swing.JButton SaveBtnOnAction;
+    private javax.swing.JButton UpdateBtnOnAction;
+    private javax.swing.JComboBox<String> cmbIngId;
+    private javax.swing.JComboBox<String> cmbSupId;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTable tblSuplierDetails;
+    private javax.swing.JTextField txtDate;
+    private javax.swing.JTextField txtQty;
     // End of variables declaration//GEN-END:variables
 }

@@ -272,7 +272,12 @@ public class DashboardForm extends javax.swing.JFrame {
     private void ingredientDetailsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingredientDetailsBtnActionPerformed
         // TODO add your handling code here:
         java.awt.EventQueue.invokeLater(() -> {
-        IngredientDetailsForm supplierDetailsForm = new IngredientDetailsForm();
+        IngredientDetailsForm supplierDetailsForm = null;
+            try {
+                supplierDetailsForm = new IngredientDetailsForm();
+            } catch (SQLException ex) {
+                System.getLogger(DashboardForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
         supplierDetailsForm.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
         supplierDetailsForm.setVisible(true);
     });
