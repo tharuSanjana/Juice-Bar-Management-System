@@ -4,19 +4,27 @@
  */
 package ControllerForm;
 
+import Dto.SupplierDto;
+import Model.SupplierModel;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import java.sql.SQLException;
+
 /**
  *
  * @author user
  */
 public class SupplierDeleteForm extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SupplierDeleteForm.class.getName());
 
     /**
      * Creates new form SupplierDeleteForm
      */
-    public SupplierDeleteForm() {
+    public SupplierDeleteForm() throws SQLException {
         initComponents();
+        populateComboBox();
     }
 
     /**
@@ -28,21 +36,185 @@ public class SupplierDeleteForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        cmbId = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        txtName = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtAddress = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txtConNumber = new javax.swing.JTextField();
+        okBtnOnAction = new javax.swing.JButton();
+        cancelBtnOnAction = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText(" ID");
+
+        cmbId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbIdActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Name");
+
+        jLabel4.setText("Contact Number");
+
+        jLabel5.setText("Address");
+
+        okBtnOnAction.setText("Ok");
+        okBtnOnAction.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okBtnOnActionActionPerformed(evt);
+            }
+        });
+
+        cancelBtnOnAction.setText("Cancel");
+        cancelBtnOnAction.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelBtnOnActionActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(59, 59, 59)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbId, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtConNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(122, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(okBtnOnAction)
+                .addGap(40, 40, 40)
+                .addComponent(cancelBtnOnAction)
+                .addGap(59, 59, 59))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(77, 77, 77)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(38, 38, 38)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtConNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(85, 85, 85)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(okBtnOnAction)
+                    .addComponent(cancelBtnOnAction))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cmbIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbIdActionPerformed
+        // TODO add your handling code here:
+        SupplierModel model = new SupplierModel();
+
+        String id = cmbId.getSelectedItem().toString();
+        SupplierDto supDto = null;
+        try {
+            supDto = model.search(id);
+        } catch (SQLException ex) {
+            System.getLogger(SupplierDeleteForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        //var cusDto = CustomerModel.search(cusId);
+        txtName.setText(supDto.getName());
+        txtAddress.setText(supDto.getAddress());
+        txtConNumber.setText(supDto.getConNum());
+    }//GEN-LAST:event_cmbIdActionPerformed
+
+    private void okBtnOnActionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnOnActionActionPerformed
+        // TODO add your handling code here:
+        SupplierModel model = new SupplierModel();
+        String id = cmbId.getSelectedItem().toString();
+
+        boolean flag = false;
+        try {
+            flag = model.delete(id);
+        } catch (SQLException ex) {
+            System.getLogger(CustomerForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        if (flag) {
+            JOptionPane.showMessageDialog(this,
+                    "Supplier deleted successfully! ",
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE);
+            clearFields();
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Failed to delete Supplier.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_okBtnOnActionActionPerformed
+
+    private void cancelBtnOnActionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnOnActionActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_cancelBtnOnActionActionPerformed
+
+    private void clearFields() {
+
+        txtName.setText("");
+        txtConNumber.setText("");
+        txtAddress.setText("");
+
+    }
+
+    public void populateComboBox() throws SQLException {
+
+        try {
+            List<String> dataFromDB = SupplierModel.getCmbSupplierId();
+
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+
+            for (String id : dataFromDB) {
+                model.addElement(id);
+            }
+
+            cmbId.setModel(model);
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error loading Supplier IDs: " + e.getMessage(),
+                    "Database Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -66,9 +238,25 @@ public class SupplierDeleteForm extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new SupplierDeleteForm().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> {
+            try {
+                new SupplierDeleteForm().setVisible(true);
+            } catch (SQLException ex) {
+                System.getLogger(SupplierDeleteForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cancelBtnOnAction;
+    private javax.swing.JComboBox<String> cmbId;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JButton okBtnOnAction;
+    private javax.swing.JTextField txtAddress;
+    private javax.swing.JTextField txtConNumber;
+    private javax.swing.JTextField txtName;
     // End of variables declaration//GEN-END:variables
 }

@@ -55,7 +55,11 @@ public class SupplierModel extends BaseModel<SupplierDto> {
 
     @Override
     public boolean delete(String id) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Connection connection = DbConnection.getInstance();
+        String sql = "DELETE FROM supplier WHERE supplierId  = ?";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        pstm.setString(1, id);
+        return pstm.executeUpdate() > 0;
     }
 
     @Override

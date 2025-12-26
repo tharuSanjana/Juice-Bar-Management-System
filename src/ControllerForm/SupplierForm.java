@@ -294,7 +294,12 @@ public class SupplierForm extends javax.swing.JFrame {
     private void DeleteBtnOnActionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteBtnOnActionActionPerformed
         // TODO add your handling code here:
         java.awt.EventQueue.invokeLater(() -> {
-            SupplierDeleteForm form = new SupplierDeleteForm();
+            SupplierDeleteForm form = null;
+            try {
+                form = new SupplierDeleteForm();
+            } catch (SQLException ex) {
+                System.getLogger(SupplierForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
             form.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
             form.setVisible(true);
         });
