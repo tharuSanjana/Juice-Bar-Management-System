@@ -222,7 +222,12 @@ public class DashboardForm extends javax.swing.JFrame {
     private void placeOrderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placeOrderBtnActionPerformed
         // TODO add your handling code here:
         java.awt.EventQueue.invokeLater(() -> {
-        OrderForm orderForm = new OrderForm();
+        OrderForm orderForm = null;
+            try {
+                orderForm = new OrderForm();
+            } catch (SQLException ex) {
+                System.getLogger(DashboardForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
         orderForm.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
         orderForm.setVisible(true);
     });
