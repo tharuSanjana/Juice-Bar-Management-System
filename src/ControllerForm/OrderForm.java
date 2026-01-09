@@ -1,16 +1,20 @@
 package ControllerForm;
 
+import Db.DbConnection;
 import Dto.OrderDto;
+import Dto.OrderItemDto;
 import Model.ItemModel;
 import Model.OrderModel;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.Timer;
-import java.sql.SQLException;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.sql.SQLException;
+import java.sql.Connection;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -192,8 +196,8 @@ public class OrderForm extends javax.swing.JFrame {
                 .addGap(95, 95, 95))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnPlaceOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addComponent(btnPlaceOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
                 .addComponent(jButton3)
                 .addGap(139, 139, 139))
         );
@@ -273,11 +277,14 @@ public class OrderForm extends javax.swing.JFrame {
         // Calculate total for this item
         double total = price * qty;
 
-        
         DefaultTableModel model = (DefaultTableModel) tblOrder.getModel();
 
-        
-        model.insertRow(0, new Object[]{
+// 🔥 REMOVE EMPTY DEFAULT ROWS
+        if (model.getRowCount() > 0 && model.getValueAt(0, 0) == null) {
+            model.setRowCount(0);
+        }
+
+        model.addRow(new Object[]{
             date,
             time,
             itemName,
@@ -286,7 +293,6 @@ public class OrderForm extends javax.swing.JFrame {
             total
         });
 
-        
         calculateNetTotal();
 
 
@@ -301,57 +307,69 @@ public class OrderForm extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbItemActionPerformed
 
     private void btnPlaceOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlaceOrderActionPerformed
-        OrderModel model = new OrderModel();
         String orderId = lblOrederId.getText();
-        String date = lblDate.getText();
-        String time = lblTime.getText();
-        int qty = Integer.parseInt(txtQty.getText());
-        double netTotal = Double.parseDouble(lblNetTotal.getText());
-        String customerId = cmbCusId.getSelectedItem().toString();
+    String date = lblDate.getText();
+    String time = lblTime.getText();
+    double netTotal = Double.parseDouble(lblNetTotal.getText());
+    String customerId = cmbCusId.getSelectedItem().toString();
 
-        // Get all items from table
-        DefaultTableModel tableModel = (DefaultTableModel) tblOrder.getModel();
-        boolean allSaved = true;
+    OrderDto orderDto = new OrderDto(orderId, date, time, netTotal, customerId);
+    DefaultTableModel tableModel = (DefaultTableModel) tblOrder.getModel();
 
-        var dto = new OrderDto(orderId, date, time, qty, netTotal, customerId);
+    try {
+        OrderModel model = new OrderModel();
 
-        boolean flag = false;
-        try {
-            flag = model.save(dto);
-        } catch (SQLException ex) {
-            System.getLogger(OrderForm.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        // 1️⃣ Save order
+        boolean orderSaved = model.save(orderDto); // <-- use existing method
+        if (!orderSaved) {
+            JOptionPane.showMessageDialog(this, "Order save failed");
+            return;
         }
-        if (flag) {
-            JOptionPane.showMessageDialog(this,
-                    "Order saved successfully! ",
-                    "Success",
-                    JOptionPane.INFORMATION_MESSAGE);
-            clearFields();
-        } else {
-            JOptionPane.showMessageDialog(this,
-                    "Failed to save order.",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-        
 
+        // 2️⃣ Save order items
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+
+            // skip empty rows
+            if (tableModel.getValueAt(i, 2) == null) continue;
+
+            String itemName = tableModel.getValueAt(i, 2).toString();
+            int qty = Integer.parseInt(tableModel.getValueAt(i, 3).toString());
+            double unitPrice = Double.parseDouble(tableModel.getValueAt(i, 4).toString());
+            double total = Double.parseDouble(tableModel.getValueAt(i, 5).toString());
+
+            String itemId = OrderModel.getItemIdByName(itemName);
+
+            OrderItemDto itemDto = new OrderItemDto(orderId, itemId, qty, unitPrice, total);
+
+            boolean itemSaved = model.saveOrderItem(itemDto); // <-- use existing method
+            if (!itemSaved) {
+                JOptionPane.showMessageDialog(this, "Item save failed");
+                return;
+            }
+        }
+
+        JOptionPane.showMessageDialog(this, "Order placed successfully!");
+        clearFields();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+    }
 
     }//GEN-LAST:event_btnPlaceOrderActionPerformed
 
-     private void clearFields() {
-    txtItemName.setText("");
-    txtQty.setText("");
-    lblNetTotal.setText("");
-    
-}
-    
+    private void clearFields() {
+        txtItemName.setText("");
+        txtQty.setText("");
+        lblNetTotal.setText("");
+
+    }
+
     private void setDateTime() {
 
-        
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         lblDate.setText(dateFormat.format(new Date()));
 
-       
         Timer timer = new Timer(1000, e -> {
             SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
             lblTime.setText(timeFormat.format(new Date()));
@@ -437,7 +455,6 @@ public class OrderForm extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }*/
-
     private void calculateNetTotal() {
 
         double netTotal = 0;
@@ -450,7 +467,6 @@ public class OrderForm extends javax.swing.JFrame {
             }
         }
 
-        
         lblNetTotal.setText(String.format("%.2f", netTotal));
     }
 

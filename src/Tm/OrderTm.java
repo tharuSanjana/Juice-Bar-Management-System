@@ -26,8 +26,8 @@ public class OrderTm extends OrderDto{
         return "OrderTm{" + "total=" + total + '}';
     }
 
-    public OrderTm(String orderId, String date, String time, int qty, double netTotal, String customerId) {
-        super(orderId, date, time, qty, netTotal, customerId);
+    public OrderTm(String orderId, String date, String time, double netTotal, String customerId) {
+        super(orderId, date, time, netTotal, customerId);
     }
 
    

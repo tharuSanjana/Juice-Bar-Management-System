@@ -6,6 +6,7 @@ package Model;
 
 import Db.DbConnection;
 import Dto.OrderDto;
+import Dto.OrderItemDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,22 +22,39 @@ public class OrderModel extends BaseModel<OrderDto> {
 
     @Override
     public boolean save(OrderDto dto) throws SQLException {
-          Connection connection = DbConnection.getInstance();
+       
+     Connection connection = DbConnection.getInstance();
 
-    String sql = "INSERT INTO orders (orderId, orderDate , time, qty, netTotal , customerId) VALUES (?, ?, ?, ?, ?, ?)";
+    String sql = "INSERT INTO orders (orderId, orderDate, time, netTotal, customerId) " +
+                 "VALUES (?, ?, ?, ?, ?)";
+
     PreparedStatement pstm = connection.prepareStatement(sql);
-
     pstm.setString(1, dto.getOrderId());
     pstm.setString(2, dto.getDate());
     pstm.setString(3, dto.getTime());
-    pstm.setInt(4, dto.getQty());
-    pstm.setDouble(5, dto.getNetTotal());
-    pstm.setString(6, dto.getCustomerId());
+    pstm.setDouble(4, dto.getNetTotal());
+    pstm.setString(5, dto.getCustomerId());
 
-    boolean flag = pstm.executeUpdate() > 0;
-    return flag;
+    return pstm.executeUpdate() > 0;
     }
 
+    public boolean saveOrderItem(OrderItemDto dto) throws SQLException {
+
+    Connection connection = DbConnection.getInstance();
+
+    String sql = "INSERT INTO orderItemDetails " +
+                 "(orderId, itemId, qty, unitPrice, total) " +
+                 "VALUES (?, ?, ?, ?, ?)";
+
+    PreparedStatement pstm = connection.prepareStatement(sql);
+    pstm.setString(1, dto.getOrderId());
+    pstm.setString(2, dto.getItemId());
+    pstm.setInt(3, dto.getQty());
+    pstm.setDouble(4, dto.getUnitPrice());
+    pstm.setDouble(5, dto.getTotal());
+
+    return pstm.executeUpdate() > 0;
+}
     @Override
     public boolean update(OrderDto dto) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -67,9 +85,8 @@ public class OrderModel extends BaseModel<OrderDto> {
                             resultSet.getString(1),
                             resultSet.getString(2),
                             resultSet.getString(3),
-                            resultSet.getInt(4),
-                            resultSet.getDouble(5),
-                            resultSet.getString(6)
+                            resultSet.getDouble(4),
+                            resultSet.getString(5)
                     )
             );
         }
@@ -169,6 +186,22 @@ public class OrderModel extends BaseModel<OrderDto> {
     }
 
     return price;
+}
+    
+    public static String getItemIdByName(String itemName) throws SQLException {
+
+    Connection con = DbConnection.getInstance();
+    String sql = "SELECT itemId FROM item WHERE itemName = ?";
+
+    PreparedStatement pstm = con.prepareStatement(sql);
+    pstm.setString(1, itemName);
+
+    ResultSet rst = pstm.executeQuery();
+
+    if (rst.next()) {
+        return rst.getString("itemId");
+    }
+    return null;
 }
 
 }

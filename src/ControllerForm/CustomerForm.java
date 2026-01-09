@@ -342,6 +342,56 @@ public void initialize() {
             e.printStackTrace();
         }
     }
+    
+    // Load all customers (default)
+public void loadCustomer() {
+    loadCustomer(null); // Call overloaded method with null
+}
+
+// 🔹 POLYMORPHISM: Overloaded method to fetch optionally by userId
+public void loadCustomer(String userId) {
+    var model = new CustomerModel();
+
+    try {
+        List<CustomerDto> dtoList;
+
+        if (userId == null) {
+            // Fetch all customers
+            dtoList = model.getAll();
+        } else {
+            // Fetch customers by userId
+            dtoList = model.getByUserId(userId); // We'll create this in CustomerModel
+        }
+
+        DefaultTableModel tableModel = (DefaultTableModel) tblCustomer.getModel();
+        tableModel.setRowCount(0);
+
+        for (CustomerDto dto : dtoList) {
+            Object[] rowData = {
+                dto.getCusId(),
+                dto.getCusName(),
+                dto.getConNum(),
+                dto.getUserId(),
+                dto.getEmail()
+            };
+            tableModel.addRow(rowData);
+        }
+
+        if (tableModel.getRowCount() > 0) {
+            tblCustomer.setRowSelectionInterval(0, 0);
+        }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(
+                this,
+                "Error loading customer data:\n" + e.getMessage(),
+                "Database Error",
+                JOptionPane.ERROR_MESSAGE
+        );
+        e.printStackTrace();
+    }
+}
+
 
     /**
      * @param args the command line arguments

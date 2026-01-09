@@ -176,4 +176,28 @@ public class CustomerModel extends BaseModel<CustomerDto> {
         return userIds;
     }
     
+    // In CustomerModel
+public List<CustomerDto> getByUserId(String userId) throws SQLException {
+    Connection connection = DbConnection.getInstance();
+    String sql = "SELECT * FROM customer WHERE userId = ?";
+    PreparedStatement pstm = connection.prepareStatement(sql);
+    pstm.setString(1, userId);
+
+    ResultSet resultSet = pstm.executeQuery();
+    List<CustomerDto> dtoList = new ArrayList<>();
+
+    while (resultSet.next()) {
+        dtoList.add(new CustomerDto(
+                resultSet.getString("customerId"),
+                resultSet.getString("name"),
+                resultSet.getString("contactNumber"),
+                resultSet.getInt("userId"),
+                resultSet.getString("email")
+        ));
+    }
+
+    return dtoList;
+}
+
+    
 }

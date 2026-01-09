@@ -12,7 +12,6 @@ public class OrderDto {
   private String orderId;
   private String  date;
   private String time;
-  private int qty;
   private double netTotal;
   private String customerId;
 
@@ -40,13 +39,7 @@ public class OrderDto {
         this.time = time;
     }
 
-    public int getQty() {
-        return qty;
-    }
-
-    public void setQty(int qty) {
-        this.qty = qty;
-    }
+   
 
     public double getNetTotal() {
         return netTotal;
@@ -64,11 +57,10 @@ public class OrderDto {
         this.customerId = customerId;
     }
 
-    public OrderDto(String orderId, String date, String time, int qty, double netTotal, String customerId) {
+    public OrderDto(String orderId, String date, String time, double netTotal, String customerId) {
         this.orderId = orderId;
         this.date = date;
         this.time = time;
-        this.qty = qty;
         this.netTotal = netTotal;
         this.customerId = customerId;
     }
