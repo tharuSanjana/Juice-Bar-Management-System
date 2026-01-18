@@ -42,7 +42,7 @@ public class RegistrationForm extends javax.swing.JFrame {
         txtPassword = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
         saveBtn = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        cancelBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,7 +68,12 @@ public class RegistrationForm extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Cancel");
+        cancelBtn.setText("Cancel");
+        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -100,7 +105,7 @@ public class RegistrationForm extends javax.swing.JFrame {
                         .addGap(779, 779, 779)
                         .addComponent(saveBtn)
                         .addGap(34, 34, 34)
-                        .addComponent(jButton2)))
+                        .addComponent(cancelBtn)))
                 .addContainerGap(963, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -123,7 +128,7 @@ public class RegistrationForm extends javax.swing.JFrame {
                 .addGap(131, 131, 131)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(saveBtn)
-                    .addComponent(jButton2))
+                    .addComponent(cancelBtn))
                 .addContainerGap(551, Short.MAX_VALUE))
         );
 
@@ -169,6 +174,14 @@ public class RegistrationForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_saveBtnActionPerformed
 
+    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
+        // TODO add your handling code here:
+         new LoginFormC().setVisible(true);
+
+    // Close Registration Form
+    this.dispose();
+    }//GEN-LAST:event_cancelBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -195,7 +208,7 @@ public class RegistrationForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton cancelBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
